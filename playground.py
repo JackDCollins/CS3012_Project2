@@ -1,39 +1,6 @@
-
 from tkinter import *
 from tkinter import ttk
 from github import Github
-username = ""
-password = ""
-
-
-
-
-def github():
-    print("TEST")
-    # using username and password
-    g = Github(username, password)
-    root=Tk()
-    print(getLangSkills(g))
-    root.title("GITHUB API")
-    for repo in g.get_user().get_repos():
-        theLabel = Label(root, text=repo.name)
-        theLabel.pack()
-
-    root.mainloop()
-
-def login():
-    gui = Tk()
-    gui.geometry("400x400")
-    #make sure first is capital and second is not
-    gui.title("Github API Login")
-    userTxt = Label(gui ,text="username").grid(row=0,column = 0)
-    passTxt = Label(gui ,text="password").grid(row=1,column=0)
-    username = Entry(gui).grid(row=0,column=1)
-    password = Entry(gui).grid(row=1,column=1)
-
-    c = ttk.Button(gui ,text="Submit", command="github").grid(row=2,column=0)
-    gui.mainloop()
-
 
 
 def getRepoDetails(user):
@@ -61,7 +28,7 @@ def getRepoDetails(user):
     return userDetails
 
 
-def getLangSkills(user):
+def getLangSkills(user) :
 
     if user == None:
         return None
@@ -116,7 +83,7 @@ def getLangSkills(user):
         repoDetails = { 'Name' : repo.name,
                         'Total' : 0         }
         #Traverse through repo
-        contents = repo.get_contents('')
+        contents = repo.get_contents("")
         while len(contents) > 1:
             file_content = contents.pop(0)
 
@@ -154,4 +121,39 @@ def getLangSkills(user):
     return userInfo
 
 
-github()
+class Commit(object):
+    name = ""
+    #insertions = 0
+    #deletions = 0
+    date = ""
+
+
+    # The class "constructor" - It's actually an initializer
+    def __init__(self, name,date):
+        self.name = name
+        #self.insertions = insertions
+        #self.deletions = deletions
+        self.date = date
+
+
+
+g = Github("JackDCollins", "@ppl3Inc")
+repos =  g.get_user().get_repos()
+#print(getLangSkills(g))
+#for repo in repos:
+repo = g.get_repo("JackDCollins/CS3012")
+#print(dir(repos))
+c = repo.get_commits()
+
+l = list()
+for ci in c:
+        #print(dir(ci))
+        #print(dir(ci.author))
+    date = ci.commit.author.date
+    author = ci.author.login
+    commit = Commit(author,date)
+    l.append(commit)
+    #print(dir(ci))
+    files = ci.files
+    for file in files  :
+        #print(file.filename)
