@@ -9,3 +9,7 @@ The project includes three different pages which illustarte parts of the sofware
 2.
 3.
 
+
+# Getting Started
+1.Start a python webserver in the directory
+2.open localhost on the specified port
