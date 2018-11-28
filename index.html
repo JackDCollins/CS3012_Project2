@@ -20,8 +20,9 @@
          padding:5px;
      }
      #section {
-         width:350px;
+         width:100%;
          float:left;
+         text-align:center;
          padding:10px;
      }
      #footer {
@@ -66,18 +67,14 @@
         <h1>GIT Repositry Analysis</h1>
     </div>
 
-    <div id="nav">
-      <a href="index.html">Homepage<a>
-        <br>
-      <a href="page2.html">Commits<a>
-        <br>
-      <a href="page3.html">Lines of Code<a>
-        <br>
-      <a href="page4.html">Homepage<a>
-      </div>
       <div id="section">
 
-      <iframe src="commitGraph.html" height="600" width="1200"></iframe>
+            <h1 class="title">Repository Anlaysis - Measuring Process</h1>
+            <h2>enter www.github.com/user/repo in user/repo format</h2>
+            <form name="search" action="cgi-bin/code.py" method="get">
+              Search: <input type="text" name="searchbox">
+              <input type="submit" value="Submit">
+</form>
     </div>
     <div id="footer">
 

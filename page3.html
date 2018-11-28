@@ -31,157 +31,54 @@
          text-align:center;
          padding:5px;
      }
+        body {
+        font-family: 'Open Sans', sans-serif;
+        }
+         .bar {
+            fill: #4F7CAC;
+         }
+         .label {
+         font-size: 20px;
+         fill: #000;
+         }
 
-     body { font: 12px Arial;}
+         .highlight {
+            fill: #3C474B;
+         }
 
-     path {
-         stroke: steelblue;
-         stroke-width: 2;
-         fill: none;
-     }
+         .val {
+           font-size: 20px;
+           fill: #000;
+         }
 
-     .axis path,
-     .axis line {
-         fill: none;
-         stroke: grey;
-         stroke-width: 1;
-         shape-rendering: crispEdges;
-     }
+         .title {
+            fill: black;
+            font-size: 40px
+            text-align: center
+         }
+      </style>
+      <script src = "https://d3js.org/d3.v4.min.js"></script>
+      <title> Animated bar chart </title>
+   </head>
 
-     div.tooltip {
-         position: absolute;
-         text-align: center;
-         width: 150px;
-         height: 28px;
-         padding: 2px;
-         font: 12px sans-serif;
-         background: lightsteelblue;
-         border: 0px;
-         border-radius: 8px;
-         /*  pointer-events: none;    This line needs to be removed */
-
-     }
-
-     </style>
-     <body>
-       <div id="header">
-          <h1>GIT Repositry Analysis</h1>
-      </div>
-
-      <div id="nav">
-        <a href="index.html">Homepage<a>
-          <br>
-        <a href="page2.html">Commits<a>
-          <br>
-        <a href="page3.html">Code Churn<a>
-          <br>
-        <a href="page4.html">Homepage<a>
-        </div>
-        <div id="section">
-
-     <!-- load the d3.js library -->
-     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-     <script>
-
-         // Set the dimensions of the canvas / graph
-         var margin = {top: 30, right: 20, bottom: 30, left: 50},
-             width = 600 - margin.left - margin.right,
-             height = 270 - margin.top - margin.bottom;
-
-         // Parse the date / time
-         var parseDate = d3.time.format("%Y-%m-%d %X").parse; //27-May-12 16:00:00. This is used for D3JS parsing
-         var formatTime = d3.time.format("%Y-%m-%d %X");// Format tooltip date / time
-
-         // Set the ranges
-         var x = d3.time.scale().range([0, width]);
-         var y = d3.scale.linear().range([height, 0]);
-
-         // Define the axes
-         var xAxis = d3.svg.axis().scale(x)
-             .orient("bottom").ticks(5);
-
-         var yAxis = d3.svg.axis().scale(y)
-             .orient("left").ticks(5);
-
-         // Define the line
-         var valueline = d3.svg.line()
-             .x(function(d) { return x(d.date); })
-             .y(function(d) { return y(d.close); });
-
-         // Define 'div' for tooltips
-         var div = d3.select("body")
-             .append("div")  // declare the tooltip div
-             .attr("class", "tooltip")
-             .style("opacity", 0);
-
-         // Adds the svg canvas
-         var svg = d3.select("body")
-             .append("svg")
-             .attr("width", width + margin.left + margin.right)
-             .attr("height", height + margin.top + margin.bottom)
-             .append("g")
-             .attr("transform",
-                 "translate(" + margin.left + "," + margin.top + ")");
-
-         // Get the data
-
-         var format = d3.time.format("YYYY-MM-DD HH:mm:ss");
-         d3.csv("codechurn.csv", function(error, data) {
-             data.forEach(function(d) {
-                 d.date = format.parse(d.date)
-                 d.close = +d.close;
-             });
-
-             // Scale the range of the data
-             x.domain(d3.extent(data, function(d) { return d.date; }));
-             y.domain([0, d3.max(data, function(d) { return d.close; })]);
-
-             // Add the valueline path.
-             svg.append("path")
-                 .attr("class", "line")
-                 .attr("d", valueline(data));
-
-             // draw the scatterplot
-             svg.selectAll("dot")
-                 .data(data)
-                 .enter().append("circle")
-                 .attr("r", 5)
-                 .attr("cx", function(d) { return x(d.date); })
-                 .attr("cy", function(d) { return y(d.close); })
-                 // Tooltip stuff after this
-                 .on("mouseover", function(d) {
-                     div.transition()
-                         .duration(500)
-                         .style("opacity", 0);
-                     div.transition()
-                         .duration(200)
-                         .style("opacity", .9);
-                     div .html(
-                         '<a href= "'+d.link+'" target="_blank">' + //with a link
-                         formatTime(d.date) +
-                         "</a>" +
-                         "<br/>"  + d.close)
-                         .style("left", (d3.event.pageX) + "px")
-                         .style("top", (d3.event.pageY - 28) + "px");
-                 });
-
-             // Add the X Axis
-             svg.append("g")
-                 .attr("class", "x axis")
-                 .attr("transform", "translate(0," + height + ")")
-                 .call(xAxis);
-
-             // Add the Y Axis
-             svg.append("g")
-                 .attr("class", "y axis")
-                 .call(yAxis);
-
-         });
-
-     </script>
-     </body>
+   <body>
+     <div id="header">
+        <h1>GIT Repositry Analysis</h1>
     </div>
 
+    <div id="nav">
+      <a href="index.html">Homepage<a>
+        <br>
+      <a href="page2.html">Commits<a>
+        <br>
+      <a href="page3.html">Lines of Code<a>
+        <br>
+      <a href="page4.html">Homepage<a>
+      </div>
+      <div id="section">
+
+      <iframe src="CodeBase.html" height="600" width="1200"></iframe>
+    </div>
     <div id="footer">
 
       Jack Donal Collins

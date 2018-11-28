@@ -4,15 +4,8 @@ from github import Github
 import Grapher as gra
 import csv
 
-class Commit(object):
-    author = ""
-    date = ""
 
-    def __init__(self, author,date):
-        self.author = author
-        self.date = date
-
-class CommitChurn(object):
+class CommitObject(object):
     author = ""
     insertions=0
     deletions=0
@@ -24,16 +17,22 @@ class CommitChurn(object):
         self.insertions = insertions
         self.deletions = deletions
 
-
+repoList = list()
 
 def doCommitHistory(github,repos):
     l = list()
-    for commit in repos:
-        if commit.author!= None:
-            date = commit.commit.author.date
-            author = commit.author.login
-            commitObject = Commit(author,date)
-            l.append(commitObject)
+
+    if len(repoList) == 0 :
+        for commit in repos:
+            if commit.author!= None:
+                date = commit.commit.author.date
+                author = commit.author.login
+                ins = commit.stats.additions
+                dels = commit.stats.deletions
+                commitObject = CommitObject(author,date,ins,dels)
+                repoList.append(commitObject)
+
+    l = repoList
 
     dict = {}
     for commit in l :
@@ -44,39 +43,45 @@ def doCommitHistory(github,repos):
 
     gra.doCommitGraph(dict)
 
-    with open('commits.csv', 'w') as csvfile:
-        fieldnames = ['name', 'val']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        for key, val in dict.items() :
-            writer.writerow({'name': key, 'val': val})
+    #with open('commits.csv', 'w') as csvfile:
+    #    fieldnames = ['name', 'val']
+    #    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    #    writer.writeheader()
+    #    for key, val in dict.items() :
+    #        writer.writerow({'name': key, 'val': val})
 
 
 def doCodeChurn(github,repos):
     l = list()
-    for commit in repos:
-        if commit.author!= None:
-            date = commit.commit.author.date
-            author = commit.author.login
-            ins = commit.stats.additions
-            dels = commit.stats.deletions
-            commitObject = CommitChurn(author,date,ins,dels)
-            l.append(commitObject)
+    if len(repoList) == 0 :
+        for commit in repos:
+            if commit.author!= None:
+                date = commit.commit.author.date
+                author = commit.author.login
+                ins = commit.stats.additions
+                dels = commit.stats.deletions
+                commitObject = CommitObject(author,date,ins,dels)
+                repoList.append(commitObject)
+                
 
+    l = repoList
     tmp = 0
     dict = {}
-    for commit in l :
+
+    t = list(reversed(l))
+    for commit in t:
             change = commit.insertions - commit.deletions
             dict[commit.date] = tmp + change
             tmp = tmp + change
 
+    gra.doCodeGraph(dict)
 
-    with open('codechurn.csv', 'w') as csvfile:
-        fieldnames = ['date', 'close']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        for key, val in dict.items() :
-            writer.writerow({'date': key.strftime("%m/%d/%y"), 'close': val})
+    #with open('codechurn.csv', 'w') as csvfile:
+    #    fieldnames = ['date', 'close']
+    #    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    #    writer.writeheader()
+    #    for key, val in dict.items() :
+    #        writer.writerow({'date': key.strftime("%m/%d/%y"), 'close': val})
 
 
 
@@ -87,3 +92,4 @@ c = repo.get_commits()
 #doCommitHistory(g,c)
 #doCodeChurn(g,c)
 doCommitHistory(g,c)
+doCodeChurn(g,c)

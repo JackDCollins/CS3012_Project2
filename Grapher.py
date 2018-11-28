@@ -23,3 +23,19 @@ def doCommitGraph(inputData) :
     fig = go.Figure(data=data, layout=layout)
     offline.plot(fig)
     os.rename('temp-plot.html', 'commitGraph.html')
+
+
+def doCodeGraph(inputData) :
+        #a = t + (v)
+    data = [go.Line(
+            x=tuple(inputData.keys()),
+            y=tuple(inputData.values()),marker=dict(
+        color='#4F7CAC'
+        )
+    )]
+
+    layout = go.Layout(title='Number of Commits per Contributor')
+
+    fig = go.Figure(data=data, layout=layout)
+    offline.plot(fig)
+    os.rename('temp-plot.html', 'CodeBase.html')
