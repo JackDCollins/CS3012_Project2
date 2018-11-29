@@ -15,7 +15,7 @@ def doCommitGraph(inputData) :
             x=tuple(inputData.keys()),
             y=tuple(inputData.values()),marker=dict(
         color='#4F7CAC'
-        )
+        ),opacity=0.6
     )]
 
     layout = go.Layout(title='Number of Commits per Contributor')
@@ -31,10 +31,10 @@ def doCodeGraph(inputData) :
             x=tuple(inputData.keys()),
             y=tuple(inputData.values()),marker=dict(
         color='#4F7CAC'
-        )
+        ),opacity=0.6
     )]
 
-    layout = go.Layout(title='Number of Commits per Contributor')
+    layout = go.Layout(title='Code Churn (Net Number of Lines Over time)')
 
     fig = go.Figure(data=data, layout=layout)
     offline.plot(fig)

@@ -3,6 +3,10 @@ from tkinter import ttk
 from github import Github
 import Grapher as gra
 import csv
+import requests
+import Contributor as cont
+
+
 
 
 class CommitObject(object):
@@ -62,7 +66,7 @@ def doCodeChurn(github,repos):
                 dels = commit.stats.deletions
                 commitObject = CommitObject(author,date,ins,dels)
                 repoList.append(commitObject)
-                
+
 
     l = repoList
     tmp = 0
@@ -89,7 +93,11 @@ g = Github("b94cfbadca124937e3a619bcc3a90b3c4fb119e0")
 #repos =  g.get_user().get_repos()
 repo = g.get_repo("SeanFitz1997/EBII1819--Trinity_Module_Review")
 c = repo.get_commits()
-#doCommitHistory(g,c)
-#doCodeChurn(g,c)
+cont.doContributors(g,c,repo)
+
+
+
 doCommitHistory(g,c)
 doCodeChurn(g,c)
+#doCommitHistory(g,c)
+#doCodeChurn(g,c)
