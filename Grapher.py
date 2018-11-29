@@ -34,7 +34,7 @@ def doCodeGraph(inputData) :
         ),opacity=0.6
     )]
 
-    layout = go.Layout(title='Code Churn (Net Number of Lines Over time)')
+    layout = go.Layout(title='Net Number Lines of Code Over time')
 
     fig = go.Figure(data=data, layout=layout)
     offline.plot(fig)

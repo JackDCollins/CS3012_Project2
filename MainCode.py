@@ -89,7 +89,7 @@ def doCodeChurn(github,repos):
 
 
 
-g = Github("b94cfbadca124937e3a619bcc3a90b3c4fb119e0")
+g = Github("JackDCollins","@ppl3Inc")
 #repos =  g.get_user().get_repos()
 repo = g.get_repo("SeanFitz1997/EBII1819--Trinity_Module_Review")
 c = repo.get_commits()

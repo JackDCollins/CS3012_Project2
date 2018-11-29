@@ -16,7 +16,7 @@ def doContributors(g,c,repo) :
 
             <img src="imgs/""" + user.login + """.jpg" style="width:250px;height:250px;"> </img>
             <br>
-            <a href="https://github.com/""" + user.login + """" class="h2">""" + user.login + """<h2>
+            <a href="https://github.com/""" + user.login + """" class="h2">""" + user.login + """<a>
             <br>
             """
 
@@ -97,7 +97,7 @@ def doContributors(g,c,repo) :
         <br>
       <a href="page2.html">Commits<a>
         <br>
-      <a href="page3.html">Code Chrun/Lines of Code<a>
+      <a href="page3.html">Lines of Code<a>
         <br>
       <a href="Contributors.html">Contributors<a>
       </div>
