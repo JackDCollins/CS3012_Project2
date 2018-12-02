@@ -1,5 +1,8 @@
 # CS3012_Project2
 
+#Demo
+A Demo .gif is available to view
+
 # Requirements
 The project requires python 3.X.X 
 
